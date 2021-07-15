@@ -3,6 +3,7 @@ package com.getir.service;
 import com.getir.entity.Book;
 import com.getir.exception.EntityNotExistException;
 import com.getir.model.request.BookCreateRequest;
+import com.getir.model.request.BookStockUpdateRequest;
 import com.getir.model.request.BookUpdateRequest;
 import com.getir.repository.BookRepository;
 import org.junit.Test;
@@ -77,6 +78,23 @@ public class BookServiceTest {
         Mockito.when(bookRepository.findById(book.getId())).thenThrow(new EntityNotExistException(String.valueOf(book.getId())));
 
         bookService.deleteBook(book.getId());
+
+    }
+
+    @Test
+    public void it_should_update_book_stock(){
+
+        Book book = new Book();
+        book.setId(1L);
+        book.setRemainingStock(50L);
+
+        Mockito.when(bookRepository.findById(book.getId())).thenReturn(java.util.Optional.of(book));
+
+        BookStockUpdateRequest request = new BookStockUpdateRequest();
+        request.setId(1L);
+        request.setSoldStock(10L);
+
+        bookService.updateBookStock(request);
 
     }
 }

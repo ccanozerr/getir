@@ -3,6 +3,7 @@ package com.getir.controller;
 import com.getir.constants.ApiEndPoints;
 import com.getir.model.dto.BookDTO;
 import com.getir.model.request.BookCreateRequest;
+import com.getir.model.request.BookStockUpdateRequest;
 import com.getir.model.request.BookUpdateRequest;
 import com.getir.service.BookService;
 import io.swagger.annotations.Api;
@@ -56,5 +57,13 @@ public class BookController {
     public boolean deleteBook(@PathVariable Long id){
         logger.info("Deleting book started for book id: {}", id);
         return bookService.deleteBook(id);
+    }
+
+    @PutMapping("/stock")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Update Book Stock", notes = "Update Book Stock")
+    public BookDTO updateBookStock(@Valid @RequestBody BookStockUpdateRequest request){
+        logger.info("Updating book stock started for request: {}", request);
+        return bookService.updateBookStock(request);
     }
 }

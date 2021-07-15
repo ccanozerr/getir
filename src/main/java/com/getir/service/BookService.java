@@ -1,10 +1,11 @@
 package com.getir.service;
 
-import com.getir.constants.ApiErrorConstants;
 import com.getir.entity.Book;
 import com.getir.exception.EntityNotExistException;
+import com.getir.exception.SoldStockCannotGreaterThanOldStockException;
 import com.getir.model.dto.BookDTO;
 import com.getir.model.request.BookCreateRequest;
+import com.getir.model.request.BookStockUpdateRequest;
 import com.getir.model.request.BookUpdateRequest;
 import com.getir.repository.BookRepository;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -74,5 +72,16 @@ public class BookService {
 
         return true;
 
+    }
+
+    public BookDTO updateBookStock(BookStockUpdateRequest request) {
+
+        Book book = bookRepository.findById(request.getId())
+                .orElseThrow(() -> new EntityNotExistException(String.valueOf(request.getId())));
+
+        if(book.getRemainingStock() < request.getSoldStock())
+            throw new SoldStockCannotGreaterThanOldStockException();
+        else
+            return book.toDTO(book);
     }
 }

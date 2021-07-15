@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.getir.model.request.BookCreateRequest;
+import com.getir.model.request.BookStockUpdateRequest;
 import com.getir.model.request.BookUpdateRequest;
 import com.getir.service.BookService;
 import org.junit.Before;
@@ -98,6 +99,19 @@ public class BookControllerTest {
         mockMvc.perform(get("/api/book"))
                 .andExpect(status().isMethodNotAllowed())
                 .andReturn();
+
+    }
+
+    @Test
+    public void it_should_invoke_api_book_stock_update_endpoint() throws Exception {
+
+        BookStockUpdateRequest request = new BookStockUpdateRequest();
+
+        ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String requestBody = objectWriter.writeValueAsString(request);
+
+        mockMvc.perform(put("/api/book/stock").contentType(MediaType.APPLICATION_JSON_VALUE).content(requestBody))
+                .andExpect(status().isOk()).andReturn();
 
     }
 
