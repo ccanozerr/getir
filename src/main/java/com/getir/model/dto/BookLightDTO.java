@@ -35,9 +35,9 @@ public class BookLightDTO {
     @Override
     public String toString() {
         return "BookLightDTO{" +
-                "name='" + name + '\'' +
-                ", writer='" + writer + '\'' +
-                ", price=" + price +
+                "name='" + getName() + '\'' +
+                ", writer='" + getWriter() + '\'' +
+                ", price=" + getWriter() +
                 '}';
     }
 }

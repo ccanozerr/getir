@@ -26,8 +26,8 @@ public class OrderByDateRequest {
     @Override
     public String toString() {
         return "OrderByDateRequest{" +
-                "startDate=" + startDate +
-                ", endDate=" + endDate +
+                "startDate=" + getStartDate() +
+                ", endDate=" + getEndDate() +
                 '}';
     }
 }

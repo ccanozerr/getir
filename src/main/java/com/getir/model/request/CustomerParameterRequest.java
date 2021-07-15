@@ -33,9 +33,9 @@ public class CustomerParameterRequest {
     @Override
     public String toString() {
         return "CustomerParameterRequest{" +
-                "id=" + id +
-                ", page=" + page +
-                ", size=" + size +
+                "id=" + getId() +
+                ", page=" + getPage() +
+                ", size=" + getSize() +
                 '}';
     }
 }

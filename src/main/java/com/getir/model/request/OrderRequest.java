@@ -26,8 +26,8 @@ public class OrderRequest {
     @Override
     public String toString() {
         return "OrderRequest{" +
-                "customerID=" + customerID +
-                ", bookIDs=" + bookIDs +
+                "customerID=" + getCustomerID() +
+                ", bookIDs=" + getBookIDs() +
                 '}';
     }
 }

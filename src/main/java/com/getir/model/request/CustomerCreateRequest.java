@@ -53,10 +53,10 @@ public class CustomerCreateRequest {
     @Override
     public String toString() {
         return "CustomerCreateRequest{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", orderList=" + orderList +
+                "name='" + getName() + '\'' +
+                ", surname='" + getSurname() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", orderList=" + getOrderList() +
                 '}';
     }
 }

@@ -18,6 +18,10 @@ public class ApiErrorTest {
         LocalDateTime formatDateTime = LocalDateTime.parse(now, formatter);
 
         ApiError apiError = new ApiError("exceptionMessage", "description", HttpStatus.I_AM_A_TEAPOT, formatDateTime);
+        apiError.setExceptionMessage("exceptionMessage");
+        apiError.setDescription("description");
+        apiError.setStatus(HttpStatus.I_AM_A_TEAPOT);
+        apiError.setTimestamp(formatDateTime);
 
         String apiErrorStringValue = apiError.toString();
 

@@ -27,8 +27,8 @@ public class OrderResponse {
     @Override
     public String toString() {
         return "OrderResponse{" +
-                "customer=" + customer +
-                ", order=" + order +
+                "customer=" + getCustomer() +
+                ", order=" + getOrder() +
                 '}';
     }
 }

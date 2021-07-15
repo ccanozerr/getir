@@ -76,11 +76,11 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
-                ", customerId=" + customerId +
-                ", totalPrice=" + totalPrice +
-                ", dateCreated=" + dateCreated +
-                ", bookList=" + bookList +
+                "id=" + getId() +
+                ", customerId=" + getCustomerId() +
+                ", totalPrice=" + getTotalPrice() +
+                ", dateCreated=" + getDateCreated() +
+                ", bookList=" + getBookList() +
                 '}';
     }
 

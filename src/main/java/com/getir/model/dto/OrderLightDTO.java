@@ -37,9 +37,9 @@ public class OrderLightDTO {
     @Override
     public String toString() {
         return "OrderLightDTO{" +
-                "totalPrice=" + totalPrice +
-                ", dateCreated=" + dateCreated +
-                ", bookList=" + bookList +
+                "totalPrice=" + getTotalPrice() +
+                ", dateCreated=" + getDateCreated() +
+                ", bookList=" + getBookList() +
                 '}';
     }
 }

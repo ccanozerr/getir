@@ -1,5 +1,7 @@
-package com.getir.entity;
+package com.getir.model.dto;
 
+import com.getir.entity.Book;
+import com.getir.entity.Order;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -10,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OrderTest {
+public class OrderDTOTest {
 
     @Test
     public void it_should_convert_to_string_properly() {
@@ -33,10 +35,9 @@ public class OrderTest {
         order.setCustomerId(1L);
         order.setBookList(bookList);
 
-        String orderStringValue = order.toString();
+        OrderDTO dto = order.toDTO(order);
+        String orderStringValue = dto.toString();
 
-        assertThat(orderStringValue).isEqualTo("Order{id=1, customerId=1, totalPrice=15, dateCreated=Sun Jul 07 00:00:00 TRT 3895, bookList=[Book{name='The Silmarillion', description='The Silmarillion is a collection of mythopoeic stories.', writer='J. R. R. Tolkien', price=15, remainingStock=10}]}");
-        assertThat(1L).isEqualTo(order.getId());
+        assertThat(orderStringValue).isEqualTo("OrderDTO{id=1, customerId=null, totalPrice=15, dateCreated=Sun Jul 07 00:00:00 TRT 3895, bookList=[BookDTO{id=1, name='The Silmarillion', description='The Silmarillion is a collection of mythopoeic stories.', writer='J. R. R. Tolkien', price=15, remainingStock=10}]}");
     }
-
 }

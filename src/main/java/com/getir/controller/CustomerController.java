@@ -60,7 +60,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get Customer Orders", notes = "Get Customer Orders")
     public CustomerPageResponse getCustomerOrders(@RequestBody CustomerParameterRequest request){
-        logger.info("Get customer orders started for customer id {}", request);
+        logger.info("Get customer orders started for request {}", request);
         return customerService.getCustomerOrders(request);
     }
 }

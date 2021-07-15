@@ -18,7 +18,7 @@ public class CustomerPageResponse {
     @Override
     public String toString() {
         return "CustomerPageResponse{" +
-                "orderDTOS=" + orderDTOS +
+                "orderDTOS=" + getOrderDTOS() +
                 '}';
     }
 }

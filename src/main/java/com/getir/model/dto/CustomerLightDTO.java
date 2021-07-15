@@ -33,9 +33,9 @@ public class CustomerLightDTO {
     @Override
     public String toString() {
         return "CustomerLightDTO{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
+                "name='" + getName() + '\'' +
+                ", surname='" + getSurname() + '\'' +
+                ", email='" + getEmail() + '\'' +
                 '}';
     }
 }
