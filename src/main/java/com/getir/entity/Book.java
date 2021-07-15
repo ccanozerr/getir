@@ -1,9 +1,11 @@
 package com.getir.entity;
 
 import com.getir.model.dto.BookDTO;
+import com.getir.model.dto.BookLightDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
@@ -14,7 +16,7 @@ import java.math.BigDecimal;
 public class Book {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = "Name can not be empty.")
@@ -93,13 +95,23 @@ public class Book {
     public BookDTO toDTO(Book book) {
 
         BookDTO dto = new BookDTO();
-        dto.setId(book.getId());
-        dto.setName(book.getName());
-        dto.setDescription(book.getDescription());
-        dto.setWriter(book.getWriter());
-        dto.setPrice(book.getPrice());
-        dto.setRemainingStock(book.getRemainingStock());
+        dto.setId(getId());
+        dto.setName(getName());
+        dto.setDescription(getDescription());
+        dto.setWriter(getWriter());
+        dto.setPrice(getPrice());
+        dto.setRemainingStock(getRemainingStock());
 
         return dto;
+    }
+
+    public BookLightDTO toLightDTO(Book book) {
+
+        BookLightDTO lightDTO = new BookLightDTO();
+        lightDTO.setName(getName());
+        lightDTO.setPrice(getPrice());
+        lightDTO.setWriter(getWriter());
+
+        return lightDTO;
     }
 }

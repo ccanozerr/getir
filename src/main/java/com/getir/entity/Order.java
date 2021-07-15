@@ -1,9 +1,15 @@
 package com.getir.entity;
 
+import com.getir.model.dto.BookDTO;
+import com.getir.model.dto.BookLightDTO;
+import com.getir.model.dto.OrderDTO;
+import com.getir.model.dto.OrderLightDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +18,10 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Long customerId;
 
     @DecimalMin(value = "0.0", inclusive = false, message = "Price can not be less than 0.")
     private BigDecimal totalPrice;
@@ -22,7 +30,7 @@ public class Order {
     private Date dateCreated;
 
     @NotEmpty(message = "Order must have more than one book")
-    @OneToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL})
     private List<Book> bookList;
 
     public Long getId() {
@@ -31,6 +39,14 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public BigDecimal getTotalPrice() {
@@ -60,9 +76,41 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "totalPrice=" + getTotalPrice() +
-                ", dateCreated=" + getDateCreated() +
-                ", bookList=" + getBookList() +
+                "id=" + id +
+                ", customerId=" + customerId +
+                ", totalPrice=" + totalPrice +
+                ", dateCreated=" + dateCreated +
+                ", bookList=" + bookList +
                 '}';
+    }
+
+    public OrderDTO toDTO(Order order) {
+
+        OrderDTO dto = new OrderDTO();
+        dto.setId(order.getId());
+        dto.setTotalPrice(order.getTotalPrice());
+        dto.setDateCreated(order.getDateCreated());
+
+        List<BookDTO> bookDTOS = new ArrayList<>();
+        order.getBookList().forEach(book -> bookDTOS.add(book.toDTO(book)));
+
+        dto.setBookList(bookDTOS);
+
+        return dto;
+    }
+
+    public OrderLightDTO toLightDTO(Order order) {
+
+        OrderLightDTO lightDTO = new OrderLightDTO();
+        lightDTO.setDateCreated(order.getDateCreated());
+        lightDTO.setTotalPrice(order.getTotalPrice());
+
+        List<BookLightDTO> bookLightDTOS = new ArrayList<>();
+        order.getBookList().forEach(book -> bookLightDTOS.add(book.toLightDTO(book)));
+
+        lightDTO.setBookList(bookLightDTOS);
+
+        return lightDTO;
+
     }
 }

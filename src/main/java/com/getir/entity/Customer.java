@@ -1,15 +1,20 @@
 package com.getir.entity;
 
+import com.getir.model.dto.CustomerDTO;
+import com.getir.model.dto.CustomerLightDTO;
+import com.getir.model.dto.OrderDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Customer {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = "Name can not be empty.")
@@ -72,5 +77,29 @@ public class Customer {
                 ", email='" + getEmail() + '\'' +
                 ", orderList=" + getOrderList() +
                 '}';
+    }
+
+    public CustomerDTO toDTO(Customer customer) {
+
+        CustomerDTO dto = new CustomerDTO();
+        dto.setId(getId());
+        dto.setName(getName());
+        dto.setSurname(getSurname());
+        dto.setEmail(getEmail());
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+        getOrderList().forEach(order -> orderDTOS.add(order.toDTO(order)));
+        dto.setOrderList(orderDTOS);
+
+        return dto;
+    }
+
+    public CustomerLightDTO toLightDTO(Customer customer) {
+
+        CustomerLightDTO lightDTO = new CustomerLightDTO();
+        lightDTO.setName(getName());
+        lightDTO.setSurname(getSurname());
+        lightDTO.setEmail(getEmail());
+
+        return lightDTO;
     }
 }
