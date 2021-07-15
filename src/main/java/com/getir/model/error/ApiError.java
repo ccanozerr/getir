@@ -52,8 +52,8 @@ public class ApiError {
 
     @Override
     public String toString() {
-        return "[exceptionMessage=" + exceptionMessage + ", description=" + description + ", status=" + status
-                + ", timestamp=" + timestamp + "]";
+        return "[exceptionMessage=" + getExceptionMessage() + ", description=" + getDescription() + ", status=" + getStatus()
+                + ", timestamp=" + getTimestamp() + "]";
     }
 
 }
