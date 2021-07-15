@@ -1,34 +1,14 @@
-package com.getir.entity;
+package com.getir.model.dto;
 
-import com.getir.model.dto.BookDTO;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-@Entity
-public class Book {
+public class BookDTO {
 
-    @Id
-    @GeneratedValue
     private Long id;
-
-    @NotEmpty(message = "Name can not be empty.")
     private String name;
-
     private String description;
-
-    @NotEmpty(message = "Writer can not be empty.")
     private String writer;
-
-    @DecimalMin(value = "0.0", inclusive = false, message = "Price can not be less than 0.")
     private BigDecimal price;
-
-    @NotNull(message = "Stock can not be null.")
     private Long remainingStock;
 
     public Long getId() {
@@ -81,25 +61,13 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "name='" + getName() + '\'' +
+        return "BookDTO{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", writer='" + getWriter() + '\'' +
                 ", price=" + getPrice() +
                 ", remainingStock=" + getRemainingStock() +
                 '}';
-    }
-
-    public BookDTO toDTO(Book book) {
-
-        BookDTO dto = new BookDTO();
-        dto.setId(book.getId());
-        dto.setName(book.getName());
-        dto.setDescription(book.getDescription());
-        dto.setWriter(book.getWriter());
-        dto.setPrice(book.getPrice());
-        dto.setRemainingStock(book.getRemainingStock());
-
-        return dto;
     }
 }
