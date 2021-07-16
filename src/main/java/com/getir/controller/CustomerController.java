@@ -1,10 +1,6 @@
 package com.getir.controller;
 
 import com.getir.constants.ApiEndPoints;
-import com.getir.entity.Order;
-import com.getir.model.dto.CustomerDTO;
-import com.getir.model.dto.CustomerLightDTO;
-import com.getir.model.dto.OrderDTO;
 import com.getir.model.request.CustomerCreateRequest;
 import com.getir.model.request.CustomerParameterRequest;
 import com.getir.model.response.CustomerPageResponse;
@@ -16,12 +12,11 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = ApiEndPoints.GETIR_CUSTOMER_API, produces = ApiEndPoints.RESPONSE_CONTENT_TYPE,
@@ -43,7 +38,7 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Create Customer", notes = "Create Customer")
-    public CustomerDTO createCustomer(@Validated @RequestBody CustomerCreateRequest request){
+    public CustomerResponse createCustomer(@Valid @RequestBody CustomerCreateRequest request){
         logger.info("Creating customer started for request {}", request);
         return customerService.createCustomer(request);
     }
@@ -51,7 +46,7 @@ public class CustomerController {
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get Customer", notes = "Get Customer")
-    public CustomerDTO getCustomer(@PathVariable Long id){
+    public CustomerResponse getCustomer(@PathVariable Long id){
         logger.info("Get customer started for customer id {}", id);
         return customerService.getCustomer(id);
     }
@@ -59,7 +54,7 @@ public class CustomerController {
     @PostMapping(value = "/order")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get Customer Orders", notes = "Get Customer Orders")
-    public CustomerPageResponse getCustomerOrders(@RequestBody CustomerParameterRequest request){
+    public CustomerPageResponse getCustomerOrders(@Valid @RequestBody CustomerParameterRequest request){
         logger.info("Get customer orders started for request {}", request);
         return customerService.getCustomerOrders(request);
     }

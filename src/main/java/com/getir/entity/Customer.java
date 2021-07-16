@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Customer {
@@ -87,7 +88,10 @@ public class Customer {
         dto.setSurname(getSurname());
         dto.setEmail(getEmail());
         List<OrderDTO> orderDTOS = new ArrayList<>();
-        getOrderList().forEach(order -> orderDTOS.add(order.toDTO(order)));
+
+        if(Objects.nonNull(getOrderList()))
+            getOrderList().forEach(order -> orderDTOS.add(order.toDTO(order)));
+
         dto.setOrderList(orderDTOS);
 
         return dto;

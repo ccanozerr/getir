@@ -1,10 +1,10 @@
 package com.getir.controller;
 
 import com.getir.constants.ApiEndPoints;
-import com.getir.model.dto.BookDTO;
 import com.getir.model.request.BookCreateRequest;
 import com.getir.model.request.BookStockUpdateRequest;
 import com.getir.model.request.BookUpdateRequest;
+import com.getir.model.response.BookResponse;
 import com.getir.service.BookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +38,7 @@ public class BookController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Create Book", notes = "Create Book")
-    public BookDTO createBook(@Valid @RequestBody BookCreateRequest request){
+    public BookResponse createBook(@Valid @RequestBody BookCreateRequest request){
         logger.info("Creating book started for request {}", request);
         return bookService.createBook(request);
     }
@@ -46,7 +46,7 @@ public class BookController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Update Book", notes = "Update Book")
-    public BookDTO updateBook(@Valid @RequestBody BookUpdateRequest request){
+    public BookResponse updateBook(@Valid @RequestBody BookUpdateRequest request){
         logger.info("Updating book started for request: {}", request);
         return bookService.updateBook(request);
     }
@@ -54,7 +54,7 @@ public class BookController {
     @DeleteMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Delete Book", notes = "Delete Book")
-    public boolean deleteBook(@PathVariable Long id){
+    public BookResponse deleteBook(@PathVariable Long id){
         logger.info("Deleting book started for book id: {}", id);
         return bookService.deleteBook(id);
     }
@@ -62,7 +62,7 @@ public class BookController {
     @PutMapping("/stock")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Update Book Stock", notes = "Update Book Stock")
-    public BookDTO updateBookStock(@Valid @RequestBody BookStockUpdateRequest request){
+    public BookResponse updateBookStock(@Valid @RequestBody BookStockUpdateRequest request){
         logger.info("Updating book stock started for request: {}", request);
         return bookService.updateBookStock(request);
     }

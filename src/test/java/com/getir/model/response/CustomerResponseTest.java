@@ -1,7 +1,9 @@
 package com.getir.model.response;
 
 import com.getir.entity.Customer;
+import com.getir.model.dto.CustomerDTO;
 import com.getir.model.dto.CustomerLightDTO;
+import com.getir.model.enums.Status;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -20,14 +22,14 @@ public class CustomerResponseTest {
         customer.setEmail("ccanozerr@gmail.com");
         customer.setOrderList(new ArrayList<>());
 
-        CustomerLightDTO dto = customer.toLightDTO(customer);
+        CustomerDTO dto = customer.toDTO(customer);
 
         CustomerResponse response = new CustomerResponse();
         response.setCustomer(dto);
-        response.setOrderList(new ArrayList<>());
+        response.setStatus(Status.SUCCESS);
 
         String responseStringValue = response.toString();
 
-        assertThat(responseStringValue).isEqualTo("CustomerResponse{customer=CustomerLightDTO{name='Can', surname='Özer', email='ccanozerr@gmail.com'}, orderList=[]}");
+        assertThat(responseStringValue).isEqualTo("CustomerResponse{customer=CustomerDTO{id=1, name='Can', surname='Özer', email='ccanozerr@gmail.com', orderList=[]}, status=SUCCESS}");
     }
 }

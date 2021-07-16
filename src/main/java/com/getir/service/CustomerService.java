@@ -3,11 +3,13 @@ package com.getir.service;
 import com.getir.entity.Customer;
 import com.getir.entity.Order;
 import com.getir.exception.EntityNotExistException;
-import com.getir.model.dto.CustomerDTO;
+import com.getir.exception.MailAlreadyTakenException;
 import com.getir.model.dto.OrderDTO;
+import com.getir.model.enums.Status;
 import com.getir.model.request.CustomerCreateRequest;
 import com.getir.model.request.CustomerParameterRequest;
 import com.getir.model.response.CustomerPageResponse;
+import com.getir.model.response.CustomerResponse;
 import com.getir.repository.CustomerRepository;
 import com.getir.repository.OrderRepository;
 import org.slf4j.Logger;
@@ -35,7 +37,9 @@ public class CustomerService {
         this.orderRepository = orderRepository;
     }
 
-    public CustomerDTO createCustomer(CustomerCreateRequest request) {
+    public CustomerResponse createCustomer(CustomerCreateRequest request) {
+
+        validateEmail(request.getEmail());
 
         Customer customer = new Customer();
         customer.setName(request.getName());
@@ -47,17 +51,33 @@ public class CustomerService {
 
         logger.info("Customer saved successfully! {}", customer);
 
-        return customer.toDTO(customer);
+        CustomerResponse response = new CustomerResponse();
+        response.setStatus(Status.SUCCESS);
+        response.setCustomer(customer.toDTO(customer));
+
+        return response;
     }
 
-    public CustomerDTO getCustomer(Long id) {
+    private void validateEmail(String email) {
+
+        Customer customer = customerRepository.getCustomerByEmail(email);
+
+        if(customer != null)
+            throw new MailAlreadyTakenException(email);
+    }
+
+    public CustomerResponse getCustomer(Long id) {
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotExistException(String.valueOf(id)));
 
         logger.info("Customer get successfully! {}", customer.toDTO(customer));
 
-        return  customer.toDTO(customer);
+        CustomerResponse response = new CustomerResponse();
+        response.setStatus(Status.SUCCESS);
+        response.setCustomer(customer.toDTO(customer));
+
+        return response;
     }
 
     public CustomerPageResponse getCustomerOrders(CustomerParameterRequest request) {

@@ -1,19 +1,19 @@
 package com.getir.model.response;
 
-import com.getir.model.dto.CustomerDTO;
+import com.getir.model.dto.BookDTO;
 import com.getir.model.enums.Status;
 
-public class CustomerResponse {
+public class BookResponse {
 
-    private CustomerDTO customer;
+    private BookDTO book;
     private Status status;
 
-    public CustomerDTO getCustomer() {
-        return customer;
+    public BookDTO getBook() {
+        return book;
     }
 
-    public void setCustomer(CustomerDTO customer) {
-        this.customer = customer;
+    public void setBook(BookDTO book) {
+        this.book = book;
     }
 
     public Status getStatus() {
@@ -26,8 +26,8 @@ public class CustomerResponse {
 
     @Override
     public String toString() {
-        return "CustomerResponse{" +
-                "customer=" + getCustomer() +
+        return "BookResponse{" +
+                "book=" + getBook() +
                 ", status=" + getStatus() +
                 '}';
     }

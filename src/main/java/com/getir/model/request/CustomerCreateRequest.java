@@ -2,15 +2,18 @@ package com.getir.model.request;
 
 import com.getir.entity.Order;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class CustomerCreateRequest {
 
-    @NotEmpty(message = "Name can not be empty.")
+    @NotNull(message = "Name can not be null.")
+    @Size(min = 3, max = 16, message = "Name must have min 3 and max 16 character.")
     private String name;
 
-    @NotEmpty(message = "Surname can not be empty.")
+    @NotNull(message = "Surname can not be null.")
+    @Size(min = 3, max = 16, message = "Name must have min 3 and max 16 character.")
     private String surname;
 
     @Email(message = "Invalid email format")

@@ -1,13 +1,16 @@
 package com.getir.model.request;
 
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+
 public class BookCreateRequest {
 
     @NotEmpty(message = "Name can not be empty.")
+    @Min(value = 3, message = "Name must have more than 3 characters.")
     private String name;
 
     private String description;
@@ -19,6 +22,7 @@ public class BookCreateRequest {
     private BigDecimal price;
 
     @NotNull(message = "Stock can not be null.")
+    @Min(value = 1, message = "Stock must be higher than 1.")
     private Long remainingStock;
 
     public String getName() {

@@ -7,6 +7,7 @@ import com.getir.model.dto.BookDTO;
 import com.getir.model.request.BookCreateRequest;
 import com.getir.model.request.BookStockUpdateRequest;
 import com.getir.model.request.BookUpdateRequest;
+import com.getir.model.response.BookResponse;
 import com.getir.repository.BookRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -115,9 +116,9 @@ public class BookServiceTest {
         request.setId(1L);
         request.setSoldStock(10L);
 
-        BookDTO dto = bookService.updateBookStock(request);
+        BookResponse response = bookService.updateBookStock(request);
 
-        assertThat(dto.getId()).isEqualTo(book.getId());
+        assertThat(response.getBook().getId()).isEqualTo(book.getId());
 
     }
 }

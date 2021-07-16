@@ -1,10 +1,9 @@
 package com.getir.controller;
 
 import com.getir.constants.ApiEndPoints;
-import com.getir.model.dto.CustomerDTO;
-import com.getir.model.dto.OrderDTO;
 import com.getir.model.request.OrderByDateRequest;
 import com.getir.model.request.OrderRequest;
+import com.getir.model.response.OrderListResponse;
 import com.getir.model.response.OrderResponse;
 import com.getir.service.OrderService;
 import io.swagger.annotations.Api;
@@ -16,9 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.stylesheets.LinkStyle;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = ApiEndPoints.GETIR_ORDER_API, produces = ApiEndPoints.RESPONSE_CONTENT_TYPE,
@@ -40,7 +38,7 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Create Order", notes = "Create Order")
-    public OrderResponse createOrder(@RequestBody OrderRequest request){
+    public OrderResponse createOrder(@Valid @RequestBody OrderRequest request){
         logger.info("Creating order started for request {}", request);
         return orderService.createOrder(request);
     }
@@ -56,7 +54,7 @@ public class OrderController {
     @PostMapping(value = "/date", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get Order By Date Interval", notes = "Get Order By Date Interval")
-    public List<OrderDTO> getOrderByDateInterval(@RequestBody OrderByDateRequest request){
+    public OrderListResponse getOrderByDateInterval(@Valid @RequestBody OrderByDateRequest request){
         logger.info("Get order by date interval started for request {}", request);
         return orderService.getOrderByDateInterval(request);
     }

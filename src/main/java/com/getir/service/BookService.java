@@ -3,10 +3,11 @@ package com.getir.service;
 import com.getir.entity.Book;
 import com.getir.exception.EntityNotExistException;
 import com.getir.exception.SoldStockCannotGreaterThanOldStockException;
-import com.getir.model.dto.BookDTO;
+import com.getir.model.enums.Status;
 import com.getir.model.request.BookCreateRequest;
 import com.getir.model.request.BookStockUpdateRequest;
 import com.getir.model.request.BookUpdateRequest;
+import com.getir.model.response.BookResponse;
 import com.getir.repository.BookRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public BookDTO createBook(BookCreateRequest request) {
+    public BookResponse createBook(BookCreateRequest request) {
 
         Book book = new Book();
         book.setName(request.getName());
@@ -39,11 +40,15 @@ public class BookService {
 
         logger.info("Book saved successfully! {}", book);
 
-        return book.toDTO(book);
+        BookResponse response = new BookResponse();
+        response.setStatus(Status.SUCCESS);
+        response.setBook(book.toDTO(book));
+
+        return response;
 
     }
 
-    public BookDTO updateBook(BookUpdateRequest request) {
+    public BookResponse updateBook(BookUpdateRequest request) {
         
         Book book = bookRepository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotExistException(String.valueOf(request.getId())));
@@ -58,23 +63,33 @@ public class BookService {
 
         logger.info("Book updated successfully! {}", book);
 
-        return book.toDTO(book);
+        BookResponse response = new BookResponse();
+        response.setStatus(Status.SUCCESS);
+        response.setBook(book.toDTO(book));
+
+        return response;
     }
 
-    public boolean deleteBook(Long id) {
+    public BookResponse deleteBook(Long id) {
+
+        BookResponse response = new BookResponse();
 
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotExistException(String.valueOf(id)));
+
+        response.setBook(book.toDTO(book));
 
         bookRepository.delete(book);
 
         logger.info("Book deleted successfully!");
 
-        return true;
+        response.setStatus(Status.SUCCESS);
+
+        return response;
 
     }
 
-    public BookDTO updateBookStock(BookStockUpdateRequest request) {
+    public BookResponse updateBookStock(BookStockUpdateRequest request) {
 
         Book book = bookRepository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotExistException(String.valueOf(request.getId())));
@@ -88,6 +103,10 @@ public class BookService {
 
         logger.info("Book stock updated successfully!");
 
-        return book.toDTO(book);
+        BookResponse response = new BookResponse();
+        response.setStatus(Status.SUCCESS);
+        response.setBook(book.toDTO(book));
+
+        return response;
     }
 }

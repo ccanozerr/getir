@@ -1,7 +1,6 @@
 package com.getir.controller;
 
 import com.getir.constants.ApiEndPoints;
-import com.getir.model.dto.CustomerDTO;
 import com.getir.model.response.CustomerStatisticsResponse;
 import com.getir.service.StatisticsService;
 import io.swagger.annotations.Api;

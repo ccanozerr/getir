@@ -10,5 +10,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>{
 
     Customer getCustomerByOrderListId(Long id);
 
-    List<Customer> findById(Long id, Pageable pageable);
+    Customer getCustomerByEmail(String email);
 }

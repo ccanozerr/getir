@@ -1,10 +1,15 @@
 package com.getir.model.request;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class OrderRequest {
 
+    @NotNull(message = "CustomerId can not be null")
     private Long customerID;
+
+    @NotEmpty(message = "Book list can not be empty.")
     private List<Long> bookIDs;
 
     public Long getCustomerID() {

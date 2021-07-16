@@ -1,10 +1,14 @@
 package com.getir.model.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class OrderByDateRequest {
 
+    @NotNull(message = "Start date can not be null.")
     private Date startDate;
+
+    @NotNull(message = "End date can not be null.")
     private Date endDate;
 
     public Date getStartDate() {

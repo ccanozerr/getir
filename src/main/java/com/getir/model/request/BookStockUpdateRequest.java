@@ -1,8 +1,15 @@
 package com.getir.model.request;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class BookStockUpdateRequest {
 
+    @NotNull(message = "ID can not be null.")
     private Long id;
+
+    @NotNull(message = "SoldStock can not be null.")
+    @Min(value = 1, message = "Stock must be higher than 1.")
     private Long soldStock;
 
     public Long getId() {

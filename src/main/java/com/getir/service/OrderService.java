@@ -6,8 +6,10 @@ import com.getir.entity.Order;
 import com.getir.exception.EntityNotExistException;
 import com.getir.model.dto.OrderDTO;
 import com.getir.model.dto.OrderLightDTO;
+import com.getir.model.enums.Status;
 import com.getir.model.request.OrderByDateRequest;
 import com.getir.model.request.OrderRequest;
+import com.getir.model.response.OrderListResponse;
 import com.getir.model.response.OrderResponse;
 import com.getir.repository.BookRepository;
 import com.getir.repository.CustomerRepository;
@@ -113,7 +115,7 @@ public class OrderService {
 
     }
 
-    public List<OrderDTO> getOrderByDateInterval(OrderByDateRequest request) {
+    public OrderListResponse getOrderByDateInterval(OrderByDateRequest request) {
 
         List<Order> orderList = orderRepository.getAllByDateCreatedBetween(request.getStartDate(), request.getEndDate());
         List<OrderDTO> orderDTOS = new ArrayList<>();
@@ -122,6 +124,10 @@ public class OrderService {
 
         logger.info("Orders get successfully for dates between [{}-{}]", request.getStartDate(), request.getEndDate());
 
-        return orderDTOS;
+        OrderListResponse response = new OrderListResponse();
+        response.setStatus(Status.SUCCESS);
+        response.setOrders(orderDTOS);
+
+        return response;
     }
 }

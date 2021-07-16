@@ -1,19 +1,21 @@
 package com.getir.model.response;
 
-import com.getir.model.dto.CustomerDTO;
+import com.getir.model.dto.OrderDTO;
 import com.getir.model.enums.Status;
 
-public class CustomerResponse {
+import java.util.List;
 
-    private CustomerDTO customer;
+public class OrderListResponse {
+
+    private List<OrderDTO> orders;
     private Status status;
 
-    public CustomerDTO getCustomer() {
-        return customer;
+    public List<OrderDTO> getOrders() {
+        return orders;
     }
 
-    public void setCustomer(CustomerDTO customer) {
-        this.customer = customer;
+    public void setOrders(List<OrderDTO> orders) {
+        this.orders = orders;
     }
 
     public Status getStatus() {
@@ -26,8 +28,8 @@ public class CustomerResponse {
 
     @Override
     public String toString() {
-        return "CustomerResponse{" +
-                "customer=" + getCustomer() +
+        return "OrderListResponse{" +
+                "orders=" + getOrders() +
                 ", status=" + getStatus() +
                 '}';
     }

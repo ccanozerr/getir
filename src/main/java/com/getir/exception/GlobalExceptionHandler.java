@@ -46,7 +46,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(SoldStockCannotGreaterThanOldStockException.class)
     public ResponseEntity<Object> handleStockCannotGreaterThanOldStockException(SoldStockCannotGreaterThanOldStockException ex){
-        ApiError error = new ApiError(ex.getMessage(), ApiErrorConstants.ENTITY_NOT_EXIST, HttpStatus.BAD_REQUEST, LocalDateTime.now());
+        ApiError error = new ApiError(ex.getMessage(), ApiErrorConstants.STOCK_CAN_NOT_GREATER, HttpStatus.BAD_REQUEST, LocalDateTime.now());
+        logger.error("Sold stock cannot greater than old stock exception. Exception detail: {}", error);
+        return ResponseEntity.status(error.getStatus()).body(error);
+    }
+
+    @ExceptionHandler(MailAlreadyTakenException.class)
+    public ResponseEntity<Object> handleMailAlreadyTakenException(MailAlreadyTakenException ex){
+        ApiError error = new ApiError(ex.getMessage(), ApiErrorConstants.MAIL_ALREADY_TAKEN, HttpStatus.BAD_REQUEST, LocalDateTime.now());
         logger.error("Sold stock cannot greater than old stock exception. Exception detail: {}", error);
         return ResponseEntity.status(error.getStatus()).body(error);
     }

@@ -38,6 +38,6 @@ public class OrderDTOTest {
         OrderDTO dto = order.toDTO(order);
         String orderStringValue = dto.toString();
 
-        assertThat(orderStringValue).isEqualTo("OrderDTO{id=1, customerId=null, totalPrice=15, dateCreated=Sun Jul 07 00:00:00 TRT 3895, bookList=[BookDTO{id=1, name='The Silmarillion', description='The Silmarillion is a collection of mythopoeic stories.', writer='J. R. R. Tolkien', price=15, remainingStock=10}]}");
+        assertThat(orderStringValue).isEqualTo("OrderDTO{id=1, customerId=1, totalPrice=15, dateCreated=Sun Jul 07 00:00:00 TRT 3895, bookList=[BookDTO{id=1, name='The Silmarillion', description='The Silmarillion is a collection of mythopoeic stories.', writer='J. R. R. Tolkien', price=15, remainingStock=10}]}");
     }
 }
