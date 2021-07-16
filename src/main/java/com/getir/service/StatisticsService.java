@@ -49,7 +49,7 @@ public class StatisticsService {
             CustomerStatisticsDTO dto = new CustomerStatisticsDTO();
             dto.setMonth(key);
             dto.setTotalOrderCount(orders.size());
-            dto.setTotalBookCount(orders.stream().mapToInt(order -> order.getBookList().size()).sum());
+            dto.setTotalBookCount(orders.stream().mapToInt(order -> Math.toIntExact(order.getTotalBookCount())).sum());
             BigDecimal totalAmount = BigDecimal.ZERO;
             for (Order o : orders) {
                 totalAmount = totalAmount.add(BigDecimal.valueOf(o.getTotalPrice().doubleValue()));

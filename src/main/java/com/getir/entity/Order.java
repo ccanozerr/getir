@@ -102,6 +102,7 @@ public class Order {
         dto.setTotalPrice(order.getTotalPrice());
         dto.setDateCreated(order.getDateCreated());
         dto.setCustomerId(order.getCustomerId());
+        dto.setTotalBookCount(order.getTotalBookCount());
 
         List<BookDTO> bookDTOS = new ArrayList<>();
         order.getBookList().forEach(book -> bookDTOS.add(book.toDTO(book)));
