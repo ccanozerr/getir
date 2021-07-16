@@ -24,7 +24,7 @@ public class BookDTOTest {
 
         String bookStringValue = dto.toString();
 
-        assertThat(bookStringValue).isEqualTo("BookDTO{id=1, name='The Silmarillion', description='The Silmarillion is a collection of mythopoeic stories.', writer='J. R. R. Tolkien', price=15, remainingStock=10}");
+        assertThat(bookStringValue).isEqualTo("BookDTO{id=1, name='The Silmarillion', description='The Silmarillion is a collection of mythopoeic stories.', writer='J. R. R. Tolkien', price=15.0, remainingStock=10}");
         assertThat(1L).isEqualTo(book.getId());
     }
 }

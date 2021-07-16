@@ -4,7 +4,11 @@ import com.getir.entity.Book;
 import com.getir.entity.Customer;
 import com.getir.entity.Order;
 import com.getir.exception.EntityNotExistException;
+import com.getir.exception.OrderCountInvalidException;
+import com.getir.exception.SoldStockCannotGreaterThanOldStockException;
+import com.getir.model.OrderDetail;
 import com.getir.model.dto.OrderDTO;
+import com.getir.model.dto.OrderDetailDTO;
 import com.getir.model.dto.OrderLightDTO;
 import com.getir.model.enums.Status;
 import com.getir.model.request.OrderByDateRequest;
@@ -20,9 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.math.MathContext;
+import java.util.*;
 
 @Service
 @Transactional
@@ -44,20 +47,40 @@ public class OrderService {
 
     public OrderResponse createOrder(OrderRequest request) {
 
+        // Get current customer
         Customer customer = customerRepository.getById(request.getCustomerID());
 
-        List<Book> books = bookRepository.findAllById(request.getBookIDs());
+        // Get book id list and fill the bookList
+        List<Long> bookIDs = new ArrayList<>();
+        request.getOrders().forEach(orderDTO -> bookIDs.add(orderDTO.getBookID()));
+        List<Book> books = bookRepository.findAllById(bookIDs);
 
+        // Calculate totalBookCount and fill the bookAndCountMap
+        Long totalBookCount = 0L;
+        Map<Long, Long> bookAndCountMap = new HashMap<>();
+        for (OrderDetailDTO dto : request.getOrders()) {
+
+            if(dto.getOrderCount() <= 0)
+                throw new OrderCountInvalidException(String.valueOf(dto.getOrderCount()));
+
+            totalBookCount += dto.getOrderCount();
+            bookAndCountMap.put(dto.getBookID(), dto.getOrderCount());
+        }
+
+        // Create order and add order to current customer's orderList
         Order order = new Order();
         order.setBookList(books);
-        order.setTotalPrice(calculatePrice(books));
+        order.setTotalPrice(calculatePrice(bookAndCountMap, books));
         order.setDateCreated(new Date());
         order.setCustomerId(request.getCustomerID());
+        order.setTotalBookCount(totalBookCount);
         customer.getOrderList().add(order);
 
         customerRepository.save(customer);
 
-        updateStockInformation(books);
+        logger.info("Order added to customer successfully! {}", customer);
+
+        updateStockInformation(bookAndCountMap, books);
 
         OrderResponse orderResponse = new OrderResponse();
         orderResponse.setOrder(order.toLightDTO(order));
@@ -68,22 +91,41 @@ public class OrderService {
         return orderResponse;
     }
 
-    private void updateStockInformation(List<Book> books) {
+    private BigDecimal calculatePrice(Map<Long, Long> bookAndCountMap, List<Book> books) {
 
-        books.forEach(book -> {
-            book.setRemainingStock(book.getRemainingStock() - 1);
-        });
+        logger.info("Price calculate started for books details {}!", books);
 
-        logger.info("Stocks updated successfully for books! {}", books);
+        long totalPrice = 0L;
+
+        for(Map.Entry<Long, Long> entry : bookAndCountMap.entrySet()) {
+            Book book = books.stream().filter(b -> b.getId().equals(entry.getKey())).findAny().orElse(null);
+            if(book != null)
+                totalPrice += book.getPrice().longValue() * entry.getValue();
+            else
+                throw new EntityNotExistException();
+        }
+
+        return new BigDecimal(totalPrice);
 
     }
 
-    private BigDecimal calculatePrice(List<Book> books) {
+    private void updateStockInformation(Map<Long, Long> bookAndCountMap, List<Book> books) {
 
-        logger.info("Price calculate started for books {}!", books);
+        for(Map.Entry<Long, Long> entry : bookAndCountMap.entrySet()) {
+            Book book = books.stream().filter(b -> b.getId().equals(entry.getKey())).findAny().orElse(null);
 
-        return books.stream().map(Book::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+            if(book != null){
+                if(entry.getValue() > book.getRemainingStock())
+                    throw new SoldStockCannotGreaterThanOldStockException();
+
+                book.setRemainingStock(book.getRemainingStock() - entry.getValue());
+            } else {
+                throw new EntityNotExistException("Book not found.");
+            }
+
+        }
+
+        logger.info("Stocks updated successfully for books! {}", books);
 
     }
 

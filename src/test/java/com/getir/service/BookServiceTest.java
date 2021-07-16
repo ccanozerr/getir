@@ -68,6 +68,7 @@ public class BookServiceTest {
 
         Book book = new Book();
         book.setId(1L);
+        book.setPrice(new BigDecimal(1));
 
         Mockito.when(bookRepository.findById(book.getId())).thenReturn(java.util.Optional.of(book));
 
@@ -92,6 +93,7 @@ public class BookServiceTest {
         Book book = new Book();
         book.setId(1L);
         book.setRemainingStock(50L);
+        book.setPrice(new BigDecimal(1));
 
         Mockito.when(bookRepository.findById(book.getId())).thenReturn(java.util.Optional.of(book));
 

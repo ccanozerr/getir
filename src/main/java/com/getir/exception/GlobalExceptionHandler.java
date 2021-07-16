@@ -57,4 +57,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         logger.error("Sold stock cannot greater than old stock exception. Exception detail: {}", error);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
+
+    @ExceptionHandler(OrderCountInvalidException.class)
+    public ResponseEntity<Object> handleOrderCountInvalidException(OrderCountInvalidException ex){
+        ApiError error = new ApiError(ex.getMessage(), ApiErrorConstants.ORDER_COUNT_INVALID, HttpStatus.BAD_REQUEST, LocalDateTime.now());
+        logger.error("Order count is invalid exception. Exception detail: {}", error);
+        return ResponseEntity.status(error.getStatus()).body(error);
+    }
 }

@@ -4,6 +4,8 @@ import com.getir.entity.Book;
 import com.getir.entity.Customer;
 import com.getir.entity.Order;
 import com.getir.exception.EntityNotExistException;
+import com.getir.model.OrderDetail;
+import com.getir.model.dto.OrderDetailDTO;
 import com.getir.model.request.OrderByDateRequest;
 import com.getir.model.request.OrderRequest;
 import com.getir.repository.BookRepository;
@@ -53,36 +55,27 @@ public class OrderServiceTest {
         bookList.add(book);
         bookList.add(book);
 
-        List<Order> orderList = new ArrayList<>();
 
-        Order order = new Order();
-        order.setId(1L);
-        order.setDateCreated(new Date(1995, Calendar.JULY,7));
-        order.setTotalPrice(new BigDecimal(15));
-        order.setCustomerId(1L);
-        order.setBookList(bookList);
-
-        orderList.add(order);
-        orderList.add(order);
+        Mockito.when(bookRepository.findAllById(Mockito.anyCollection())).thenReturn(bookList);
 
         Customer customer = new Customer();
         customer.setId(1L);
         customer.setName("Can");
         customer.setSurname("Özer");
         customer.setEmail("ccanozerr@gmail.com");
-        customer.setOrderList(orderList);
+        customer.setOrderList(new ArrayList<>());
 
-        List<Long> bookIDs = new ArrayList<>();
-        bookIDs.add(1L);
-        bookIDs.add(2L);
-        bookIDs.add(3L);
+        Mockito.when(customerRepository.getById(customer.getId())).thenReturn(customer);
+
+        List<OrderDetailDTO> orders = new ArrayList<>();
+        OrderDetailDTO dto = new OrderDetailDTO();
+        dto.setOrderCount(1L);
+        dto.setBookID(1L);
+        orders.add(dto);
 
         OrderRequest request = new OrderRequest();
         request.setCustomerID(1L);
-        request.setBookIDs(bookIDs);
-
-        Mockito.when(customerRepository.getById(request.getCustomerID())).thenReturn(customer);
-        Mockito.when(bookRepository.findAllById(request.getBookIDs())).thenReturn(bookList);
+        request.setOrders(orders);
 
         orderService.createOrder(request);
     }

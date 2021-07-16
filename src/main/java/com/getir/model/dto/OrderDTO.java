@@ -11,6 +11,7 @@ public class OrderDTO {
     private BigDecimal totalPrice;
     private Date dateCreated;
     private List<BookDTO> bookList;
+    private Long totalBookCount;
 
     public Long getId() {
         return id;
@@ -52,6 +53,14 @@ public class OrderDTO {
         this.bookList = bookList;
     }
 
+    public Long getTotalBookCount() {
+        return totalBookCount;
+    }
+
+    public void setTotalBookCount(Long totalBookCount) {
+        this.totalBookCount = totalBookCount;
+    }
+
     @Override
     public String toString() {
         return "OrderDTO{" +
@@ -60,6 +69,7 @@ public class OrderDTO {
                 ", totalPrice=" + getTotalPrice() +
                 ", dateCreated=" + getDateCreated() +
                 ", bookList=" + getBookList() +
+                ", totalBookCount=" + getTotalBookCount() +
                 '}';
     }
 }

@@ -1,14 +1,12 @@
 package com.getir.model.dto;
 
-import java.math.BigDecimal;
-
 public class BookDTO {
 
     private Long id;
     private String name;
     private String description;
     private String writer;
-    private BigDecimal price;
+    private Double price;
     private Long remainingStock;
 
     public Long getId() {
@@ -43,11 +41,11 @@ public class BookDTO {
         this.writer = writer;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

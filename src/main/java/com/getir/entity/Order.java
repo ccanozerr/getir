@@ -33,6 +33,8 @@ public class Order {
     @ManyToMany(cascade = {CascadeType.ALL})
     private List<Book> bookList;
 
+    private Long totalBookCount;
+
     public Long getId() {
         return id;
     }
@@ -73,6 +75,14 @@ public class Order {
         this.bookList = bookList;
     }
 
+    public Long getTotalBookCount() {
+        return totalBookCount;
+    }
+
+    public void setTotalBookCount(Long totalBookCount) {
+        this.totalBookCount = totalBookCount;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -81,6 +91,7 @@ public class Order {
                 ", totalPrice=" + getTotalPrice() +
                 ", dateCreated=" + getDateCreated() +
                 ", bookList=" + getBookList() +
+                ", totalBookCount=" + getTotalBookCount() +
                 '}';
     }
 

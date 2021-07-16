@@ -35,7 +35,7 @@ public class OrderTest {
 
         String orderStringValue = order.toString();
 
-        assertThat(orderStringValue).isEqualTo("Order{id=1, customerId=1, totalPrice=15, dateCreated=Sun Jul 07 00:00:00 TRT 3895, bookList=[Book{name='The Silmarillion', description='The Silmarillion is a collection of mythopoeic stories.', writer='J. R. R. Tolkien', price=15, remainingStock=10}]}");
+        assertThat(orderStringValue).isEqualTo("Order{id=1, customerId=1, totalPrice=15, dateCreated=Sun Jul 07 00:00:00 TRT 3895, bookList=[Book{name='The Silmarillion', description='The Silmarillion is a collection of mythopoeic stories.', writer='J. R. R. Tolkien', price=15, remainingStock=10}], totalBookCount=null}");
         assertThat(1L).isEqualTo(order.getId());
     }
 

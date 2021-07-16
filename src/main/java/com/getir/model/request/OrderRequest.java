@@ -1,5 +1,7 @@
 package com.getir.model.request;
 
+import com.getir.model.dto.OrderDetailDTO;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -9,8 +11,8 @@ public class OrderRequest {
     @NotNull(message = "CustomerId can not be null")
     private Long customerID;
 
-    @NotEmpty(message = "Book list can not be empty.")
-    private List<Long> bookIDs;
+    @NotEmpty(message = "Order list can not be empty.")
+    private List<OrderDetailDTO> orders;
 
     public Long getCustomerID() {
         return customerID;
@@ -20,19 +22,19 @@ public class OrderRequest {
         this.customerID = customerID;
     }
 
-    public List<Long> getBookIDs() {
-        return bookIDs;
+    public List<OrderDetailDTO> getOrders() {
+        return orders;
     }
 
-    public void setBookIDs(List<Long> bookIDs) {
-        this.bookIDs = bookIDs;
+    public void setOrders(List<OrderDetailDTO> orders) {
+        this.orders = orders;
     }
 
     @Override
     public String toString() {
         return "OrderRequest{" +
-                "customerID=" + getCustomerID() +
-                ", bookIDs=" + getBookIDs() +
+                "customerID=" + customerID +
+                ", orders=" + orders +
                 '}';
     }
 }

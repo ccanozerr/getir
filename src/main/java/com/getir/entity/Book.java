@@ -99,7 +99,7 @@ public class Book {
         dto.setName(getName());
         dto.setDescription(getDescription());
         dto.setWriter(getWriter());
-        dto.setPrice(getPrice());
+        dto.setPrice(getPrice().doubleValue());
         dto.setRemainingStock(getRemainingStock());
 
         return dto;
