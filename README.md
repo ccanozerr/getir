@@ -66,3 +66,7 @@ For run application with jar, run this command in terminal;
 
 This application has a swagger implementation for testing.
 Just go to [Swagger Link](http://localhost:9521/swagger-ui.html#) after run the app. 
+
+
+## Postman Collection
+You can use this link to copy collections of API's -> https://www.getpostman.com/collections/2d521fbb59fad93173e9
