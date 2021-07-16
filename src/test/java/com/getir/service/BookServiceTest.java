@@ -2,6 +2,8 @@ package com.getir.service;
 
 import com.getir.entity.Book;
 import com.getir.exception.EntityNotExistException;
+import com.getir.exception.SoldStockCannotGreaterThanOldStockException;
+import com.getir.model.dto.BookDTO;
 import com.getir.model.request.BookCreateRequest;
 import com.getir.model.request.BookStockUpdateRequest;
 import com.getir.model.request.BookUpdateRequest;
@@ -12,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 
@@ -95,6 +99,25 @@ public class BookServiceTest {
         request.setSoldStock(10L);
 
         bookService.updateBookStock(request);
+
+    }
+
+    @Test(expected = SoldStockCannotGreaterThanOldStockException.class)
+    public void it_should_update_book_stock_and_thrown_exception(){
+
+        Book book = new Book();
+        book.setId(1L);
+        book.setRemainingStock(5L);
+
+        Mockito.when(bookRepository.findById(book.getId())).thenReturn(java.util.Optional.of(book));
+
+        BookStockUpdateRequest request = new BookStockUpdateRequest();
+        request.setId(1L);
+        request.setSoldStock(10L);
+
+        BookDTO dto = bookService.updateBookStock(request);
+
+        assertThat(dto.getId()).isEqualTo(book.getId());
 
     }
 }

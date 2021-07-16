@@ -99,7 +99,7 @@ public class OrderService {
         if(order!=null)
             orderLightDTO = order.toLightDTO(order);
         else
-            throw new EntityNotExistException(String.valueOf(id));
+            throw new EntityNotExistException("No order found for customer.");
 
         orderResponse.setOrder(orderLightDTO);
 

@@ -81,7 +81,13 @@ public class BookService {
 
         if(book.getRemainingStock() < request.getSoldStock())
             throw new SoldStockCannotGreaterThanOldStockException();
-        else
-            return book.toDTO(book);
+
+        book.setRemainingStock(book.getRemainingStock() - request.getSoldStock());
+
+        bookRepository.save(book);
+
+        logger.info("Book stock updated successfully!");
+
+        return book.toDTO(book);
     }
 }
