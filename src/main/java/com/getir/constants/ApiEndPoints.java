@@ -10,6 +10,7 @@ public class ApiEndPoints {
     public static final String GETIR_BOOK_API = API_BASE_URL + "/book";
     public static final String GETIR_CUSTOMER_API = API_BASE_URL + "/customer";
     public static final String GETIR_ORDER_API = API_BASE_URL + "/order";
+    public static final String GETIR_STATISTICS_API = API_BASE_URL + "/statistics";
 
     private ApiEndPoints(){}
 }

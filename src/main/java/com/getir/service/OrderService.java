@@ -72,9 +72,13 @@ public class OrderService {
             book.setRemainingStock(book.getRemainingStock() - 1);
         });
 
+        logger.info("Stocks updated successfully for books! {}", books);
+
     }
 
     private BigDecimal calculatePrice(List<Book> books) {
+
+        logger.info("Price calculate started for books {}!", books);
 
         return books.stream().map(Book::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -103,6 +107,8 @@ public class OrderService {
 
         orderResponse.setOrder(orderLightDTO);
 
+        logger.info("Order response is ready for customer {}, response {}", customer.toLightDTO(customer), orderResponse);
+
         return orderResponse;
 
     }
@@ -113,6 +119,8 @@ public class OrderService {
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
         orderList.forEach(order -> orderDTOS.add(order.toDTO(order)));
+
+        logger.info("Orders get successfully for dates between [{}-{}]", request.getStartDate(), request.getEndDate());
 
         return orderDTOS;
     }

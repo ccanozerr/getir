@@ -55,6 +55,8 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotExistException(String.valueOf(id)));
 
+        logger.info("Customer get successfully! {}", customer.toDTO(customer));
+
         return  customer.toDTO(customer);
     }
 
@@ -68,6 +70,7 @@ public class CustomerService {
 
         if(orders.isEmpty()){
             customerPageResponse.setOrderDTOS(new PageImpl<>(Collections.emptyList()));
+            logger.warn("Customer page is empty for request! {}", request);
             return customerPageResponse;
         }
 
@@ -75,8 +78,9 @@ public class CustomerService {
 
         orders.forEach(order -> dtoList.add(order.toDTO(order)));
 
-
         customerPageResponse.setOrderDTOS(new PageImpl<>(dtoList, PageRequest.of(request.getPage(), request.getSize()), customerRepository.count()));
+
+        logger.info("Customer page is ready! {}", customerPageResponse);
 
         return customerPageResponse;
 
