@@ -6,7 +6,6 @@ import com.getir.entity.Order;
 import com.getir.exception.EntityNotExistException;
 import com.getir.exception.OrderCountInvalidException;
 import com.getir.exception.SoldStockCannotGreaterThanOldStockException;
-import com.getir.model.OrderDetail;
 import com.getir.model.dto.OrderDTO;
 import com.getir.model.dto.OrderDetailDTO;
 import com.getir.model.dto.OrderLightDTO;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.*;
 
 @Service
@@ -47,15 +45,12 @@ public class OrderService {
 
     public OrderResponse createOrder(OrderRequest request) {
 
-        // Get current customer
         Customer customer = customerRepository.getById(request.getCustomerID());
 
-        // Get book id list and fill the bookList
         List<Long> bookIDs = new ArrayList<>();
         request.getOrders().forEach(orderDTO -> bookIDs.add(orderDTO.getBookID()));
         List<Book> books = bookRepository.findAllById(bookIDs);
 
-        // Calculate totalBookCount and fill the bookAndCountMap
         Long totalBookCount = 0L;
         Map<Long, Long> bookAndCountMap = new HashMap<>();
         for (OrderDetailDTO dto : request.getOrders()) {
@@ -67,7 +62,6 @@ public class OrderService {
             bookAndCountMap.put(dto.getBookID(), dto.getOrderCount());
         }
 
-        // Create order and add order to current customer's orderList
         Order order = new Order();
         order.setBookList(books);
         order.setTotalPrice(calculatePrice(bookAndCountMap, books));
@@ -104,6 +98,8 @@ public class OrderService {
             else
                 throw new EntityNotExistException();
         }
+
+        logger.info("Total price is: {}, books: {}", totalPrice, books);
 
         return new BigDecimal(totalPrice);
 

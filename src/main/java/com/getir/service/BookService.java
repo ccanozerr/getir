@@ -81,7 +81,7 @@ public class BookService {
 
         bookRepository.delete(book);
 
-        logger.info("Book deleted successfully!");
+        logger.info("Book deleted successfully! {}", book);
 
         response.setStatus(Status.SUCCESS);
 
@@ -101,7 +101,7 @@ public class BookService {
 
         bookRepository.save(book);
 
-        logger.info("Book stock updated successfully!");
+        logger.info("Book stock updated successfully! {}", book);
 
         BookResponse response = new BookResponse();
         response.setStatus(Status.SUCCESS);

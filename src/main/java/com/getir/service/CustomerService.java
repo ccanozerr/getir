@@ -71,11 +71,11 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotExistException(String.valueOf(id)));
 
-        logger.info("Customer get successfully! {}", customer.toDTO(customer));
-
         CustomerResponse response = new CustomerResponse();
         response.setStatus(Status.SUCCESS);
         response.setCustomer(customer.toDTO(customer));
+
+        logger.info("Customer get successfully! {}", response);
 
         return response;
     }
