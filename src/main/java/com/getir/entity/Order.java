@@ -21,6 +21,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    private int version;
+
     private Long customerId;
 
     @DecimalMin(value = "0.0", inclusive = false, message = "Price can not be less than 0.")

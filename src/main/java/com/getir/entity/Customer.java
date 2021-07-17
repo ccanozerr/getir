@@ -18,6 +18,9 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    private int version;
+
     @NotEmpty(message = "Name can not be empty.")
     private String name;
 

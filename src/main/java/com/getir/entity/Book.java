@@ -2,11 +2,9 @@ package com.getir.entity;
 
 import com.getir.model.dto.BookDTO;
 import com.getir.model.dto.BookLightDTO;
+import org.springframework.data.jpa.repository.Lock;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -18,6 +16,9 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Version
+    private int version;
 
     @NotEmpty(message = "Name can not be empty.")
     private String name;
